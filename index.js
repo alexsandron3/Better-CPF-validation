@@ -35,7 +35,7 @@ app.post('/', (req, res) => {
       // Browser config
       const browser = await puppeteer.launch({
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--headless'],
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
       });
       const page = await browser.newPage();
 
