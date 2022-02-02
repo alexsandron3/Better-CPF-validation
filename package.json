@@ -1,6 +1,29 @@
 {
+  "name": "puppeteer-tasks",
+  "version": "1.0.0",
+  "description": "Como utilizar este script",
+  "main": "index.js",
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^15.0.0",
+    "express": "^4.17.2",
     "puppeteer": "^13.1.3"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexsandron3/puppeteer-tasks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexsandron3/puppeteer-tasks/issues"
+  },
+  "homepage": "https://github.com/alexsandron3/puppeteer-tasks#readme"
 }
