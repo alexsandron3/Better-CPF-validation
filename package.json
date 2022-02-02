@@ -4,7 +4,7 @@
   "description": "Script to automatize CPF consult",
   "main": "index.js",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "dependencies": {
     "dotenv": "^15.0.0",
