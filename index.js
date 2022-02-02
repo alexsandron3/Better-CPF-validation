@@ -1,8 +1,9 @@
 // Libs
 const puppeteer = require('puppeteer');
 require('dotenv').config();
-const express = require('express'); 
-const app = express(); 
+const express = require('express');
+const app = express();
+app.use(express.json());
 
 // Script initial setup;
 const END_POINT =
@@ -10,8 +11,11 @@ const END_POINT =
 
 const timeout = 180000; // in milliseconds
 
-const CPF = process.env.CPF;
-const BIRTH_DAY = process.env.BIRTH_DAY;
+/*
+  if you are using environment variables 
+  const CPF = process.env.CPF;
+  const BIRTH_DAY = process.env.BIRTH_DAY;
+*/
 const PORT = process.env.PORT || 7000;
 
 const IS_CAPTCHA_FILLED =
@@ -19,9 +23,13 @@ const IS_CAPTCHA_FILLED =
 const USER_SITUATION_SELECTOR =
   '#mainComp > div:nth-child(3) > p > span:nth-child(10)';
 
-app.get('/', (req, res) => {
-  const { query } = req;
-  res.send(query.cpf);
+// Express server
+app.listen(PORT, function () {
+  console.log(`Running on port 7000.`);
+});
+
+app.post('/', (req, res) => {
+  const { CPF, BIRTH_DAY } = req.body;
   const main = async () => {
     try {
       // Browser config
@@ -48,15 +56,10 @@ app.get('/', (req, res) => {
       );
       const isUserRegular = textUserSituation === 'Situação Cadastral: REGULAR';
       await browser.close();
-      res.send(isUserRegular);
+      res.send({ isUserRegular });
     } catch (error) {
       console.error(error);
     }
   };
   main();
-});
-
-// Making Express listen on port 7000
-app.listen(PORT, function () {
-  console.log(`Running on port 7000.`);
 });
