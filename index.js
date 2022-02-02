@@ -37,11 +37,11 @@ app.post('/', (req, res) => {
       // Browser config
       const browser = await chromium.puppeteer.launch({
         headless: false,
-        args: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--disable-dev-shm-usage',
-        ],
+        // args: [
+        //   '--no-sandbox',
+        //   '--disable-setuid-sandbox',
+        //   '--disable-dev-shm-usage',
+        // ],
       });
       const page = await browser.newPage();
       await page.setExtraHTTPHeaders({
