@@ -3,6 +3,8 @@ const puppeteer = require('puppeteer');
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const chromium = require('chrome-aws-lambda');
+
 app.use(express.json());
 
 // Script initial setup;
@@ -33,12 +35,21 @@ app.post('/', (req, res) => {
   const main = async () => {
     try {
       // Browser config
-      const browser = await puppeteer.launch({
+      const browser = await chromium.puppeteer.launch({
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+        ],
       });
       const page = await browser.newPage();
-
+      await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9',
+      });
+      await page.setUserAgent(
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+      );
       // Fill form
       await page.goto(END_POINT);
       await page.type('#txtCPF', CPF);
