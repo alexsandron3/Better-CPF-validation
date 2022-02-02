@@ -32,6 +32,7 @@ app.post('/', (req, res) => {
       // Browser config
       const browser = await puppeteer.launch({
         headless: true,
+        args: ['--no-sandbox']
       });
       const page = await browser.newPage();
       page.setViewport({ width: 800, height: 600 });
