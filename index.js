@@ -64,8 +64,8 @@ app.post('/', (req, res) => {
       // Fill form
       console.log('Step 1: Fill form with POST data');
       await page.goto(END_POINT);
-      await page.type('#txtCPF', CPF);
-      await page.type('#txtDataNascimento', BIRTH_DAY);
+      await page.type('#txtCPF', formatedCpf);
+      await page.type('#txtDataNascimento', formatedBirthday);
 
       // Fill captcha
       console.log('Step 2: Fill captcha');
@@ -174,7 +174,7 @@ app.post('/', (req, res) => {
               userSituation: userSituation(),
               status: 1,
             });
-            await browser.close();
+            // await browser.close();
             console.log('Script finished');
           }
         } catch (error) {
