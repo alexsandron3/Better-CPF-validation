@@ -174,7 +174,7 @@ app.post('/', (req, res) => {
               userSituation: userSituation(),
               status: 1,
             });
-            // await browser.close();
+            await browser.close();
             console.log('Script finished');
           }
         } catch (error) {
