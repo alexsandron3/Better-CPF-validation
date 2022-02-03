@@ -12,7 +12,7 @@ const END_POINT =
   'https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp';
 
 const CAPTCHA_VALIDATION_END_POINT = 'https://api.anycaptcha.com';
-const timeout = 500; // in milliseconds
+const timeout = 800; // in milliseconds
 const PORT = process.env.PORT || 7000;
 const SECRET = process.env.SECRET;
 
@@ -135,6 +135,8 @@ app.post('/', (req, res) => {
             // Verify user situtation
             console.log('Step 4: Verify user situtation');
             let textUserSituation = '';
+
+            // CPF and BIRTH_DAY is valid
             try {
               const elementUserSituation = await page.$(
                 USER_SITUATION_SELECTOR,
@@ -144,6 +146,7 @@ app.post('/', (req, res) => {
                 elementUserSituation,
               );
             } catch (error) {
+              // CPF OR BIRTH_DAY is invalid
               const elementUserSituation = await page.$(
                 USER_INVALID_DATA_SELECTOR,
               );
@@ -174,15 +177,17 @@ app.post('/', (req, res) => {
               userSituation: userSituation(),
               status: 1,
             });
-            // await browser.close();
+            await browser.close();
             console.log('Script finished');
           }
         } catch (error) {
+          res.send({Message: 'Please, try again', status: 0 });
           console.error(error);
         }
       };
       get();
     } catch (error) {
+      
       console.error(error);
     }
   };
