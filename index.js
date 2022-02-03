@@ -12,7 +12,7 @@ const END_POINT =
   'https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp';
 
 const CAPTCHA_VALIDATION_END_POINT = 'https://api.anycaptcha.com';
-const timeout = 180000; // in milliseconds
+const timeout = 3000; // in milliseconds
 const PORT = process.env.PORT || 7000;
 const SECRET = process.env.SECRET;
 
@@ -20,19 +20,38 @@ const IS_CAPTCHA_FILLED =
   'document.querySelector("[data-hcaptcha-response]").dataset.hcaptchaResponse !== ""';
 const USER_SITUATION_SELECTOR =
   '#mainComp > div:nth-child(3) > p > span:nth-child(10)';
+
+const USER_INVALID_DATA_SELECTOR =
+  '#content-core > div > div > div.clConteudoCentro > span > h4';
+
 // Express server
 app.listen(PORT, function () {
   console.log(`Running on port ${PORT}`);
 });
 
 app.post('/', (req, res) => {
+  console.clear();
+  process.stdout.write('\x1Bc');
   const { CPF, BIRTH_DAY } = req.body;
+
+  // Format data
+  const regexOnlyNumbers = /\d+/g;
+  const formatedCpf = CPF.match(regexOnlyNumbers).join('');
+  const formatedBirthday = BIRTH_DAY.match(regexOnlyNumbers).join('');
+
+  // Verify that the data is correct
+  const isCpfInvalid = formatedCpf.length !== 11;
+  const isBirthdayInvalid = formatedBirthday.length !== 8;
+  if (isCpfInvalid) return res.send({ Message: 'Cpf inválido', status: 0 });
+  if (isBirthdayInvalid)
+    return res.send({ Message: 'Data de aniversário inválida', status: 0 });
+
   const main = async () => {
     try {
       // Browser config
       const browser = await puppeteer.launch({
         headless: true,
-        args: ['--no-sandbox']
+        args: ['--no-sandbox'],
       });
       const page = await browser.newPage();
       page.setViewport({ width: 800, height: 600 });
@@ -92,23 +111,71 @@ app.post('/', (req, res) => {
             page.type('#txtTexto_captcha_serpro_gov_br', text);
             await page.waitForTimeout(1000);
             // Send data
-            console.log('Step 3: Sending data do RF');
             const submitData = await page.$('#id_submit');
             await submitData.click();
-            await page.waitForSelector(USER_SITUATION_SELECTOR, { timeout });
+
+            try {
+              await page.waitForSelector('#idMensagemErro > span', { timeout });
+              console.log('CAPTCHA FAILED');
+              process.stdout.write('\x1Bc');
+
+              await browser.close();
+              main();
+              return 0;
+            } catch (error) {
+              console.log('CAPTCHA SUCCESS');
+              console.log('Step 3: Sending data to RF');
+            }
+            try {
+              await page.waitForSelector(USER_SITUATION_SELECTOR, { timeout });
+            } catch (error) {
+              console.log('CPF OR BIRTH_DAY NOT VALID');
+            }
+
             // Verify user situtation
             console.log('Step 4: Verify user situtation');
-            const elementUserSituation = await page.$(USER_SITUATION_SELECTOR);
-            const textUserSituation = await page.evaluate(
-              (element) => element.textContent,
-              elementUserSituation,
-            );
-            const isUserRegular =
-              textUserSituation === 'Situação Cadastral: REGULAR';
+            let textUserSituation = '';
+            try {
+              const elementUserSituation = await page.$(
+                USER_SITUATION_SELECTOR,
+              );
+              textUserSituation = await page.evaluate(
+                (element) => element.textContent,
+                elementUserSituation,
+              );
+            } catch (error) {
+              const elementUserSituation = await page.$(
+                USER_INVALID_DATA_SELECTOR,
+              );
+              textUserSituation = await page.evaluate(
+                (element) => element.textContent,
+                elementUserSituation,
+              );
+            }
 
-            res.send({ isUserRegular });
-            console.log({ isUserRegular });
+            const isUserRegular = textUserSituation.includes('REGULAR');
+            const isUserPending = textUserSituation.includes('PENDENTE');
+            const isUserSuspended = textUserSituation.includes('SUSPENSO');
+            const invalidCpf = textUserSituation.includes('CPF');
+            const invalidBirthDate =
+              textUserSituation.includes('Data de nascimento');
+
+            const userSituation = () => {
+              if (isUserRegular) return 'REGULAR';
+              if (isUserPending) return 'PENDENTE';
+              if (isUserSuspended) return 'SUSPENSO';
+              if (invalidCpf) return 'CPF INCORRETO';
+              if (invalidBirthDate) return 'DATA DE NASCIMENTO INCORRETA';
+              return 'INVALID';
+            };
+
+            res.send({
+              Message: '',
+              userSituation: userSituation(),
+              status: 1,
+            });
             await browser.close();
+            console.log('Script finished');
           }
         } catch (error) {
           console.error(error);
