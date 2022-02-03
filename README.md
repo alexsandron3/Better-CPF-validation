@@ -2,7 +2,7 @@
 ## Uma aplicação desenvolvida para automatizar verificações de CPF
 
 
-BetterCPF é uma aplicação criada para fazer consultas à RECEITA FEDERAL pagando muito menos comparado aos valores hoje fornecidos. Tudo o que você precisa fazer é verificar o captcha e esperar que a aplicação te retorne a situação cadastral.
+BetterCPF é uma aplicação criada para fazer consultas à RECEITA FEDERAL pagando muito menos comparado aos valores hoje fornecidos. Tudo o que você precisa fazer é enviar so dados e esperar que a aplicação te retorne a situação cadastral.
 
 > Obs: O custo para requisições para API da RF é entre R$ 0,50  e R$ 1,00 POR CONSULTA. 
 O custo dessa ferramenta é de ~ $0.4 POR 1000 CONSULTAS
