@@ -14,7 +14,8 @@ O custo dessa ferramenta é de ~ $0.4 POR 1000 CONSULTAS
 ## Instalação
 
 Better CPF requer  [Node.js](https://nodejs.org/) v12+ para rodar.
-Nós usamos o [Anycaptcha](https://anycaptcha.com/) para validar captcha, mas qualquer algoritmo de validação de captcha funcionará com poucas adaptações.
+Nós usamos o [Anycaptcha](https://anycaptcha.com?referral=6980) para validar captcha, mas qualquer algoritmo de validação de captcha funcionará com poucas adaptações.
+> Este projeto é totalmente grátis para uso, então caso opte por usar o Any Captcha, peço que use o meu [LINK](https://anycaptcha.com?referral=6980) para que eu ganhe alguns créditos na plataforma sempre que você colocar créditos.
 
 Instale as dependências e rode o servidor.
 
