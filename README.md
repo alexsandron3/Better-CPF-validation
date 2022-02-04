@@ -2,7 +2,7 @@
 ## Uma aplicação desenvolvida para automatizar verificações de CPF
 
 
-BetterCPF é uma aplicação criada para fazer consultas à RECEITA FEDERAL pagando muito menos comparado aos valores hoje fornecidos. Tudo o que você precisa fazer é enviar so dados e esperar que a aplicação te retorne a situação cadastral.
+Better CPF é uma aplicação criada para fazer consultas a RECEITA FEDERAL pagando muito menos comparado aos valores hoje fornecidos. Tudo o que você precisa fazer é enviar seus dados e esperar que a aplicação te retorne a situação cadastral.
 
 > Obs: O custo para requisições para API da RF é entre R$ 0,50  e R$ 1,00 POR CONSULTA. 
 O custo dessa ferramenta é de ~ $0.4 POR 1000 CONSULTAS
@@ -14,7 +14,7 @@ O custo dessa ferramenta é de ~ $0.4 POR 1000 CONSULTAS
 ## Instalação
 
 Better CPF requer  [Node.js](https://nodejs.org/) v12+ para rodar.
-Nós usamos o [Anycaptcha](https://anycaptcha.com?referral=6980) para validar captcha, mas qualquer algoritmo de validação de captcha funcionará com poucas adaptações.
+Nós usamos o [Anycaptcha](https://anycaptcha.com?referral=6980) para validar captcha, mas qualquer API de validação de captcha funcionará com poucas adaptações.
 > Este projeto é totalmente grátis para uso, então caso opte por usar o Any Captcha, peço que use o meu [LINK](https://anycaptcha.com?referral=6980) para que eu ganhe alguns créditos na plataforma sempre que você colocar créditos.
 
 Instale as dependências e rode o servidor.
@@ -27,7 +27,7 @@ npm run dev
 
 ## Docker
 
-Com Better CPF é bem simples de installar e dar deploy em um container.
+Com Better CPF é bem simples de instalar e dar deploy em um container.
 Por padrão o a porta exposta é a 7000, então altere isso caso ache necessário.
 
 Siga as seguintes etapas para criar, rodar e iniciar o container.
