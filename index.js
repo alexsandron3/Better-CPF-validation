@@ -4,8 +4,9 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const axios = require('axios');
-
+const cors = require('cors')
 app.use(express.json());
+app.use(cors());
 
 // Script initial setup;
 const END_POINT =
@@ -16,8 +17,6 @@ const timeout = 800; // in milliseconds
 const PORT = process.env.PORT || 7000;
 const SECRET = process.env.SECRET;
 
-const IS_CAPTCHA_FILLED =
-  'document.querySelector("[data-hcaptcha-response]").dataset.hcaptchaResponse !== ""';
 const USER_SITUATION_SELECTOR =
   '#mainComp > div:nth-child(3) > p > span:nth-child(10)';
 
@@ -36,15 +35,18 @@ app.post('/', (req, res) => {
 
   // Format data
   const regexOnlyNumbers = /\d+/g;
-  const formatedCpf = CPF.match(regexOnlyNumbers).join('');
-  const formatedBirthday = BIRTH_DAY.match(regexOnlyNumbers).join('');
+  const sanitizeddCpf = CPF.match(regexOnlyNumbers).join('');
+  const sanitizeddBirthday = BIRTH_DAY.match(regexOnlyNumbers).join('');
 
-  // Verify that the data is correct
-  const isCpfInvalid = formatedCpf.length !== 11;
-  const isBirthdayInvalid = formatedBirthday.length !== 8;
-  if (isCpfInvalid) return res.send({ Message: 'Cpf inválido', status: 0 });
+  // Verify if data is correct
+  const isCpfInvalid = sanitizeddCpf.length !== 11;
+  const isBirthdayInvalid = sanitizeddBirthday.length !== 8;
+  if (isCpfInvalid) return res.send({ Message: 'CPF deve conter apenas 11 digitos', status: 0 });
   if (isBirthdayInvalid)
-    return res.send({ Message: 'Data de aniversário inválida', status: 0 });
+    return res.send({
+      Message: 'Data de nascimento deve conter apenas 8 digitos',
+      status: 0,
+    });
 
   const main = async () => {
     try {
@@ -64,8 +66,8 @@ app.post('/', (req, res) => {
       // Fill form
       console.log('Step 1: Fill form with POST data');
       await page.goto(END_POINT);
-      await page.type('#txtCPF', formatedCpf);
-      await page.type('#txtDataNascimento', formatedBirthday);
+      await page.type('#txtCPF', sanitizeddCpf);
+      await page.type('#txtDataNascimento', sanitizeddBirthday);
 
       // Fill captcha
       console.log('Step 2: Fill captcha');
@@ -116,8 +118,8 @@ app.post('/', (req, res) => {
 
             try {
               await page.waitForSelector('#idMensagemErro > span', { timeout });
-              console.log('CAPTCHA FAILED');
               process.stdout.write('\x1Bc');
+              console.log('CAPTCHA FAILED, TRYING AGAIN');
 
               await browser.close();
               main();
@@ -173,7 +175,7 @@ app.post('/', (req, res) => {
             };
 
             res.send({
-              Message: '',
+              Message: 'Consulta realizada com sucesso',
               userSituation: userSituation(),
               status: 1,
             });
@@ -181,13 +183,13 @@ app.post('/', (req, res) => {
             console.log('Script finished');
           }
         } catch (error) {
-          res.send({Message: 'Please, try again', status: 0 });
+          res.send({Message: 'Por favor, tente novamente', status: 0 });
           console.error(error);
         }
       };
       get();
     } catch (error) {
-      
+      res.send({ Message: 'Por favor, tente novamente', status: 0 });
       console.error(error);
     }
   };
