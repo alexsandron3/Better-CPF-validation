@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.25.0",
+    "cors": "^2.8.5",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
     "puppeteer": "^13.1.3",

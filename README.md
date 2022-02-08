@@ -54,7 +54,8 @@ Ex:
 - [Dotenv](https://www.npmjs.com/package/dotenv)
 - [Express](https://www.npmjs.com/package/express)
 - [Puppeteer](https://www.npmjs.com/package/puppeteer)
-- [useragent](https://www.npmjs.com/package/user-agents)
+- [Useragent](https://www.npmjs.com/package/user-agents)
+- [Cors](https://www.npmjs.com/package/cors)
 
 
 ## License
