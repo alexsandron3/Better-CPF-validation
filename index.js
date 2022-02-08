@@ -13,7 +13,7 @@ const END_POINT =
   'https://servicos.receita.fazenda.gov.br/Servicos/CPF/ConsultaSituacao/ConsultaPublica.asp';
 
 const CAPTCHA_VALIDATION_END_POINT = 'https://api.anycaptcha.com';
-const timeout = 800; // in milliseconds
+const timeout = 400; // in milliseconds
 const PORT = process.env.PORT || 7000;
 const SECRET = process.env.SECRET;
 
@@ -107,7 +107,7 @@ app.post('/', (req, res) => {
           if (!data.solution) {
             setTimeout(() => {
               get();
-            }, 500);
+            }, 400);
           } else {
             const { text } = data.solution;
             page.type('#txtTexto_captcha_serpro_gov_br', text);
