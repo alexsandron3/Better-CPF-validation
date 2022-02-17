@@ -35,7 +35,7 @@ Siga as seguintes etapas para criar, rodar e iniciar o container.
 ```
 docker image build -t better-cpf .
 docker run -dit -p 7000:7000 --name puppeteer better-cpf
-docker exec -it puppeteer npm run dev
+docker exec -it puppeteer npm start
 ``` 
 ## Uso
 Faça uma requisição POST para http://localhost:7000/ passando um JSON com um CPF e uma data de nascimento no formato ddmmYYYY
