@@ -25,6 +25,11 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 COPY ./package.json /
 COPY ./index.js /
+COPY ./getPeopleList.js /
+COPY ./massiveValidation.js /
+COPY ./people.json /
+COPY ./updatePeopleList.js /
+
 
 RUN npm install
 
