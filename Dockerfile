@@ -23,10 +23,10 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 # COPY FILES
 
-COPY ./package.json /
-COPY ./index.js /
 COPY ./getPeopleList.js /
+COPY ./index.js /
 COPY ./massiveValidation.js /
+COPY ./package.json /
 COPY ./people.json /
 COPY ./updatePeopleList.js /
 
