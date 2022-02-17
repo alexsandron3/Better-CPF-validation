@@ -1,11 +1,12 @@
-FROM alpine
+FROM ubuntu:20.04
 
 # EXPOSE
 
 EXPOSE 7000
 
 # Installs latest Chromium (92) package.
-RUN apk add --no-cache \
+RUN apt-get-update\ 
+  apk add --no-cache \  
   chromium \
   nss \
   freetype \
