@@ -16,7 +16,7 @@ const END_POINT =
 const CAPTCHA_VALIDATION_END_POINT = 'https://api.anycaptcha.com';
 const timeout = 800; // in milliseconds
 const PORT = process.env.PORT || 7000;
-const SECRET = process.env.SECRET;
+const SECRET = '003e54dc1e9348f5a0675b38d6b4cc0f';
 
 const USER_SITUATION_SELECTOR =
   '#mainComp > div:nth-child(3) > p > span:nth-child(10)';
