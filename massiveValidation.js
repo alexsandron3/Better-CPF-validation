@@ -42,11 +42,12 @@ module.exports = async (req, res) => {
       peopleList[index].situacao = 'CPF deve conter apenas 11 digitos';
       peopleList[index].validado = true;
       updatePeopleList(peopleList);
-      return console.log({
+      console.log({
         Message: 'CPF deve conter apenas 11 digitos',
         status: 0,
         nome,
       });
+      continue
     }
 
     if (isBirthdayInvalid) {
@@ -54,11 +55,12 @@ module.exports = async (req, res) => {
         'Data de nascimento deve conter apenas 8 digitos';
       peopleList[index].validado = true;
       updatePeopleList(peopleList);
-      return console.log({
+      console.log({
         Message: 'Data de nascimento deve conter apenas 8 digitos',
         status: 0,
         nome,
       });
+      continue;
     }
 
     const main = async () => {

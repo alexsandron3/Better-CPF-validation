@@ -1,16 +1,16 @@
 [
   {
+    "cpf": "1198607165",
     "nome": "DJACY MIRANDA DE SOUZA",
-    "dataNascimento": "16/09/1967",
-    "cpf": "01198607165",
-    "situacao": "IRREGULAR",
+    "dataNascimento": "09/16/1967",
+    "situacao": "CPF deve conter apenas 11 digitos",
     "validado": true
   },
   {
-    "nome": "TEREZINHA SIQUEIRA SANABRIA",
-    "dataNascimento": "26/12/1960",
     "cpf": "51943700168",
-    "situacao": "REGULAR",
+    "nome": "TEREZINHA SIQUEIRA SANABRIA",
+    "dataNascimento": "12/26/1960",
+    "situacao": "DATA DE NASCIMENTO INCORRETA",
     "validado": true
   }
 ]
