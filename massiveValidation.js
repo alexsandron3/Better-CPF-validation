@@ -42,12 +42,11 @@ module.exports = async (req, res) => {
       peopleList[index].situacao = 'CPF deve conter apenas 11 digitos';
       peopleList[index].validado = true;
       updatePeopleList(peopleList);
-      console.log({
+      return console.log({
         Message: 'CPF deve conter apenas 11 digitos',
         status: 0,
         nome,
       });
-      continue
     }
 
     if (isBirthdayInvalid) {
@@ -55,12 +54,11 @@ module.exports = async (req, res) => {
         'Data de nascimento deve conter apenas 8 digitos';
       peopleList[index].validado = true;
       updatePeopleList(peopleList);
-      console.log({
+      return console.log({
         Message: 'Data de nascimento deve conter apenas 8 digitos',
         status: 0,
         nome,
       });
-      continue;
     }
 
     const main = async () => {
@@ -182,6 +180,7 @@ module.exports = async (req, res) => {
               const isUserRegular = textUserSituation.includes('REGULAR');
               const isUserPending = textUserSituation.includes('PENDENTE');
               const isUserSuspended = textUserSituation.includes('SUSPENSO');
+              const isUserDeceased = textUserSituation.includes('FALECIDO');
               const invalidCpf = textUserSituation.includes('CPF');
               const invalidBirthDate =
                 textUserSituation.includes('Data de nascimento');
@@ -193,6 +192,7 @@ module.exports = async (req, res) => {
                 if (isUserSuspended) return 'SUSPENSO';
                 if (invalidCpf) return 'CPF INCORRETO';
                 if (invalidBirthDate) return 'DATA DE NASCIMENTO INCORRETA';
+                if (isUserDeceased) return 'FALECIDO';
                 return 'INVÁLIDO';
               };
               peopleList[index].situacao = userSituation();
