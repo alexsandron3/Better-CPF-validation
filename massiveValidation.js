@@ -175,6 +175,8 @@ module.exports = async (req, res) => {
                 );
               }
 
+              const isUSerIregular =
+                textUserSituation.includes('REGULARIZAÇÃO');
               const isUserRegular = textUserSituation.includes('REGULAR');
               const isUserPending = textUserSituation.includes('PENDENTE');
               const isUserSuspended = textUserSituation.includes('SUSPENSO');
@@ -183,14 +185,14 @@ module.exports = async (req, res) => {
                 textUserSituation.includes('Data de nascimento');
 
               const userSituation = () => {
-                if (isUserRegular) return 'REGULAR';
-                if (isUserPending) return 'PENDENTE';
+                if (isUserRegular && !isUSerIregular) return 'REGULAR';
+                if (isUserPending && !isUSerIregular) return 'PENDENTE';
+                if (isUSerIregular) return 'IRREGULAR';
                 if (isUserSuspended) return 'SUSPENSO';
                 if (invalidCpf) return 'CPF INCORRETO';
                 if (invalidBirthDate) return 'DATA DE NASCIMENTO INCORRETA';
                 return 'INVÁLIDO';
               };
-
               peopleList[index].situacao = userSituation();
               peopleList[index].validado = true;
               await updatePeopleList(peopleList);
@@ -213,12 +215,12 @@ module.exports = async (req, res) => {
         };
         get();
       } catch (error) {
+        console.error(error);
         return console.log({
           Message: 'Por favor, tente novamente',
           status: 0,
           nome,
         });
-        console.error(error);
       }
     };
     await main();

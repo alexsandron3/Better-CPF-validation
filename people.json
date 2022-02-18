@@ -3,42 +3,14 @@
     "nome": "DJACY MIRANDA DE SOUZA",
     "dataNascimento": "16/09/1967",
     "cpf": "01198607165",
-    "situacao": "",
-    "validado": false 
+    "situacao": "IRREGULAR",
+    "validado": true
   },
   {
     "nome": "TEREZINHA SIQUEIRA SANABRIA",
     "dataNascimento": "26/12/1960",
     "cpf": "51943700168",
-    "situacao": "",
-    "validado": false 
-  },
-  {
-    "nome": "FRANCISCO COSTA DOS SANTOS",
-    "dataNascimento": "19/10/1949",
-    "cpf": "00756636272",
-    "situacao": "",
-    "validado": false 
-  },
-  {
-    "nome": "MARIA DA SOLENIDADE VIEIRA DA SILVA",
-    "dataNascimento": "01/01/1967",
-    "cpf": "79456081168",
-    "situacao": "",
-    "validado": false 
-  },
-  {
-    "nome": "ROSA SANTOS TIMOTEO DAS NEVES",
-    "dataNascimento": "23/11/1951",
-    "cpf": "19967144220",
-    "situacao": "",
-    "validado": false 
-  },
-  {
-    "nome": "DAVID MIGUEL CARDOSO FILHO",
-    "dataNascimento": "29/09/1954",
-    "cpf": "61977799787",
-    "situacao": "",
-    "validado": false 
+    "situacao": "REGULAR",
+    "validado": true
   }
 ]
