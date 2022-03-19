@@ -1,13 +1,31 @@
-const { StatusCodes } = require("http-response-status");
+/* eslint-disable consistent-return */
+const { StatusCodes } = require('http-response-status');
+const sanitizeString = require('../helpers/sanitizeString');
+const validateBirthday = require('../helpers/validateBirthday');
+const validateCpf = require('../helpers/validateCpf');
 
-module.exports = (err, _req, res) => {
-  if (err.statusCode) {
-    return res.status(err.statusCode).json({ message: err.message });
+module.exports = (err, req, res, next) => {
+  const { CPF, BIRTH_DAY } = req.body;
+  console.log(CPF, BIRTH_DAY);
+  const sanitizedCpf = sanitizeString(CPF);
+  const sanitizedBirthday = sanitizeString(BIRTH_DAY);
+  const isCpfValid = validateCpf(sanitizedCpf);
+  const isBirthdayValid = validateBirthday(sanitizedBirthday);
+  console.log(isCpfValid);
+  if (!isCpfValid) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      Message: 'CPF deve conter apenas 11 digitos',
+      status: 0,
+    });
   }
 
-  console.error(err);
+  if (!isBirthdayValid) {
+    return res.send({
+      Message: 'Data de nascimento deve conter apenas 8 digitos',
+      status: 0,
+    });
+  }
 
-  return res
-    .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .json({ message: `Internal server error: ${err.message}` });
+  next();
+  // return false;
 };

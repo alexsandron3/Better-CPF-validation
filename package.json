@@ -10,6 +10,7 @@
     "axios": "^0.25.0",
     "cors": "^2.8.5",
     "dotenv": "^15.0.0",
+    "eslint-config-trybe-backend": "^1.0.4",
     "express": "^4.17.2",
     "http-response-status": "^1.0.25",
     "puppeteer": "^13.1.3",
