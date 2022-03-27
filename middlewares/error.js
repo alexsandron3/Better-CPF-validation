@@ -1,11 +1,9 @@
-const { StatusCodes } = require('http-response-status');
+const { StatusCodes } = require('http-status-codes');
 
-module.exports = (err, _req, res) => {
+module.exports = (err, _req, res, _next) => {
   if (err.statusCode) {
     return res.status(err.statusCode).json({ message: err.message });
   }
-
-  console.error(err);
 
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)

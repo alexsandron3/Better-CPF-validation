@@ -1,3 +1,3 @@
-const { regexOnlyNumbers } = require("./constants");
+const { regexOnlyNumbers } = require('./constants');
 
-module.exports = (string) => string.match(regexOnlyNumbers).join("");
+module.exports = (string) => string.match(regexOnlyNumbers).join('');
