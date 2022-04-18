@@ -40,7 +40,7 @@ docker exec -it puppeteer npm run dev
 ## Uso
 Faça uma requisição POST para http://localhost:7000/ passando um JSON com um CPF e uma data de nascimento no formato ddmmYYYY
 Ex: 
-```
+```JSON
 {
     "CPF" : "00000000000",
     "BIRTH_DAY" : "02022022"
